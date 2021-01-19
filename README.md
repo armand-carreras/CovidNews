@@ -9,7 +9,7 @@
   
 ## Why this?
 
-  Now that we've realised that Covid-19 is here to stay, what could be better that getting you on date with the current status of it?!
+  Now that we've realised that Covid-19 is here to stay, what could be better rather than getting you on date with the current status of it?!
   
 ## restAPI: 
    
