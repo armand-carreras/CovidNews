@@ -16,5 +16,11 @@
    1. Coronavirus State (nivel España):
       - (https://covid19tracking.narrativa.com/es/spain/api.html)
    2. News:
-      - https://serpwow.com/docs/search-api/searches/parameters
+      - (https://serpwow.com/docs/search-api/searches/parameters)
         - News API fetching from: Google, Bing, Yahoo!...
+        
+## Trello & MockUp:
+  1. Trello:
+    - (https://trello.com/invite/b/IFbNwFJW/46d88f41d523d0b014d039a4c5c56db6/covidapp)
+  2. MockUp:
+    - (https://app.moqups.com/aE0XeMmoVU/view/page/aa6a51a80)
