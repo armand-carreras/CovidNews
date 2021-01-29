@@ -1,0 +1,18 @@
+<div class="header">
+    <img src='../../assets/icon/favicon.gif'><h2>Login to CovidNews.</h2>
+
+</div>
+<form [formGroup]="loginForm" (ngSubmit)="signIn()">
+    <ion-item>
+        <ion-label position="floating">E-Mail <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required formControlName="email" type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Password <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required formControlName="password" type="password"></ion-input>
+    </ion-item>
+    <p color='--ion-text-color'>If you don't have an account, <a href="/register">Register.</a></p>
+    <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
+        Login
+    </ion-button>
+</form>
