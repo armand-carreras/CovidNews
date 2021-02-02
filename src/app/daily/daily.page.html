@@ -2,7 +2,7 @@
     <div id="container">
 
         
-        <img id='splashImg' src="../../assets/icon/favicon.gif">
+        <img class='splashImg' src="../../assets/icon/favicon.gif">
         
         <div class="shadow"></div>
         
@@ -24,11 +24,17 @@
 
 <ion-header *ngIf='routeResolveData'>
   <ion-toolbar>
-    <ion-title>Daily Report</ion-title>
-    <ion-fab-button slot='end' style="--background: transparent;" [routerLink]="['/login']"
+    <ion-title>Dashboard <span *ngIf='logged'>Healthy: {{healthy}}</span></ion-title>
+    
+        <ion-fab-button [hidden]='logged' slot="end" style="--background: transparent;" [routerLink]="['/login']"
     routerLinkActive="router-link-active">
         <ion-icon name='person-outline'></ion-icon>
     </ion-fab-button>
+        <ion-fab-button [hidden]='!logged' slot="end" (click)='logOut()' style="--background: transparent;">
+        <ion-icon name='log-out-outline'></ion-icon>
+    </ion-fab-button> 
+
+    
   </ion-toolbar>
 </ion-header>
 
@@ -131,15 +137,15 @@
                     <p>TODAY: {{countryData.country.TodayConfirmed | number }}</p>
                     <p>YESTERDAY: {{countryData.country.YesterdayConfirmed | number}}</p>
                 </div>
-                <ng-container *ngIf='countryData.global.todayVsYesterdayConfirmed>0; then subidaGC; else bajadaGC'>
+                <ng-container *ngIf='countryData.global.todayVsYesterdayConfirmed>0; then subidaCC; else bajadaCC'>
                 </ng-container>
-                <ng-template #bajadaGC>
+                <ng-template #bajadaCC>
                     <ion-chip>
                         <ion-icon name="arrow-down" color='secondary'></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayConfirmed | number}}</ion-label>
                     </ion-chip>
                 </ng-template>
-                <ng-template #subidaGC>
+                <ng-template #subidaCC>
                     <ion-chip>
                         <ion-icon name="arrow-up" color='danger'></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayConfirmed | number}}</ion-label>
@@ -157,16 +163,16 @@
                     <p>YESTERDAY: {{countryData.country.YesterdayDeaths | number}}</p>
                 </div>
 
-                <ng-container *ngIf='countryData.country.todayVsYesterdayDeaths>0; then subidaGD; else bajadaGD'>
+                <ng-container *ngIf='countryData.country.todayVsYesterdayDeaths>0; then subidaCD; else bajadaCD'>
 
                 </ng-container>
-                <ng-template #bajadaGD>
+                <ng-template #bajadaCD>
                     <ion-chip>
                         <ion-icon name="arrow-down" color='secondary'></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayDeaths | number}}</ion-label>
                     </ion-chip>
                 </ng-template>
-                <ng-template #subidaGD>
+                <ng-template #subidaCD>
                     <ion-chip>
                         <ion-icon name="arrow-up" color='danger'></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayDeaths | number}}</ion-label>
@@ -184,15 +190,15 @@
                     <p>TODAY: {{countryData.country.TodayRecovered | number }}</p>
                     <p>YESTERDAY: {{countryData.country.YesterdayRecovered | number}}</p>
                 </div>
-                <ng-container *ngIf='countryData.country.todayVsYesterdayRecovered>0; then bajadaGR; else subidaGR'>
+                <ng-container *ngIf='countryData.country.todayVsYesterdayRecovered>0; then bajadaCR; else subidaCR'>
                 </ng-container>
-                <ng-template #bajadaGR>
+                <ng-template #bajadaCR>
                     <ion-chip>
                         <ion-icon name="arrow-up" style="color: green"></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayRecovered |number}}</ion-label>
                     </ion-chip>
                 </ng-template>
-                <ng-template #subidaGR>
+                <ng-template #subidaCR>
                     <ion-chip>
                         <ion-icon name="arrow-down" color='danger'></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayRecovered | number}}</ion-label>
@@ -210,15 +216,15 @@
                     <p>TODAY: {{countryData.country.TodayHospitalizedPatients | number }}</p>
                     <p>YESTERDAY: {{countryData.country.YesterdayHospitalizedPatients | number}}</p>
                 </div>
-                <ng-container *ngIf='countryData.country.todayVsYesterdayHospitalizedPatients>0; then bajadaGH; else subidaGH'>
+                <ng-container *ngIf='countryData.country.todayVsYesterdayHospitalizedPatients>0; then bajadaCH; else subidaCH'>
                 </ng-container>
-                <ng-template #bajadaGH>
+                <ng-template #bajadaCH>
                     <ion-chip>
                         <ion-icon name="arrow-up" color='secondary'></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayHospitalizedPatients |number}}</ion-label>
                     </ion-chip>
                 </ng-template>
-                <ng-template #subidaGH>
+                <ng-template #subidaCH>
                     <ion-chip>
                         <ion-icon name="arrow-down" color='danger'></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayHospitalizedPatients | number}}</ion-label>
@@ -236,15 +242,15 @@
                     <p>TODAY: {{countryData.country.TodayIntensiveCare | number }}</p>
                     <p>YESTERDAY: {{countryData.country.YesterdayIntensiveCare | number}}</p>
                 </div>
-                <ng-container *ngIf='countryData.country.todayVsYesterdayIntensiveCare>0; then bajadaGI; else subidaGI'>
+                <ng-container *ngIf='countryData.country.todayVsYesterdayIntensiveCare>0; then bajadaCI; else subidaCI'>
                 </ng-container>
-                <ng-template #bajadaGI>
+                <ng-template #bajadaCI>
                     <ion-chip>
                         <ion-icon name="arrow-up" color='secondary'></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayIntensiveCare |number}}</ion-label>
                     </ion-chip>
                 </ng-template>
-                <ng-template #subidaGI>
+                <ng-template #subidaCI>
                     <ion-chip>
                         <ion-icon name="arrow-down" color='danger'></ion-icon>
                         <ion-label>{{countryData.country.todayVsYesterdayIntensiveCare | number}}</ion-label>
@@ -262,16 +268,16 @@
 
 
 
-    <ion-fab style="position: fixed; width: 75px; height: 75px;" vertical="bottom" horizontal="end">
-        <ion-fab-button style="--background: transparent; width:75px; height: 75px;"><img src='../../assets/icon/favicon.gif'></ion-fab-button>
+    <ion-fab style="position: fixed; width: 75px; height: 75px; margin-right: 1rem;" vertical="bottom" horizontal="end">
+        <ion-fab-button style="--background: transparent; width:75px; height: 75px;" class="splashImg"><img src='../../assets/icon/favicon.gif'></ion-fab-button>
         <ion-fab-list side="top">
-            <ion-fab-button [routerLink]="['/details']">
-                <ion-icon name="newspaper-outline"></ion-icon>
+            <ion-fab-button [hidden]='!logged' style="opacity: 0.75; width: 2.5rem; height:2.5rem" [routerLink]="['/questions']">
+                <ion-icon style="color:rgb(70, 223, 70);width: 2.5rem; height:2.5rem"  name="help-outline"></ion-icon>
             </ion-fab-button>
         </ion-fab-list>
         <ion-fab-list side="start">
-            <ion-fab-button [routerLink]="['/ranking']">
-                <ion-icon name='globe-outline'></ion-icon>
+            <ion-fab-button style="--background: transparent; width: 2.5rem; height:2.5rem" [routerLink]="['/ranking']">
+                <ion-icon style="color:rgb(70, 223, 70);width: 2.5rem; height:2.5rem" name='stats-chart-outline'></ion-icon>
             </ion-fab-button>
         </ion-fab-list>
     </ion-fab>

@@ -1,0 +1,14 @@
+.image{
+    max-height: 350px;
+    width: auto;
+}
+ion-icon{
+    width: 3rem;
+    height: 3rem;
+}
+ion-content{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}

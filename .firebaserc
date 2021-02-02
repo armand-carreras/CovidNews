@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "covidnews-app": {
+      "hosting": {
+        "app": [
+          "covidnews-app"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "covidnews-app"
+  }
+}

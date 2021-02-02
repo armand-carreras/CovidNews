@@ -6,14 +6,14 @@ import { IonicModule } from '@ionic/angular';
 import { DailyPageRoutingModule } from './daily-routing.module';
 import { DailyPage } from './daily.page';
 
-import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+// import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    Ng2GoogleChartsModule,
+    // Ng2GoogleChartsModule,
     DailyPageRoutingModule
   ],
   declarations: [DailyPage]

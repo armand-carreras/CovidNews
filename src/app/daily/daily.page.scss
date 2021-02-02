@@ -37,7 +37,7 @@
     animation: light 2s infinite;
     -webkit-animation: light 2s infinite;
 }
-#splashImg{
+.splashImg{
     
     animation: bounce 2s infinite;
     -webkit-animation: bounce 2s infinite;
@@ -53,6 +53,7 @@
     
     width:95%;
     height: auto;
+    margin: 1rem auto;
     ion-card-header{
         padding: 5px;
         padding-left: 16px;

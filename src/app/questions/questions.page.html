@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="text-align: center;">Covid Test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="width:100%; height:auto">
+
+  <ion-card style="width: 80%; height: auto; display: flex; flex-flow: column; justify-content: center; align-items: center; margin: auto auto;">
+    <ion-card-header>
+      <ion-card-title><img src="../../assets/icon/favicon.gif" width="75px" height="75px">{{index + 1}} . {{sintoma}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content style="display: flex; flex-flow: column; justify-content: center; align-items: center;">
+      <img class="image" [src]='imagen'>
+      <div class='botonera'>
+        <ion-button (click)='noQuestion()' style="--background: transparent;">
+          <ion-icon  color='danger' name='close-outline'></ion-icon>
+        </ion-button>
+        <ion-button (click)='yesQuestion()' style="--background: transparent;">
+          <ion-icon  color='success' name='checkmark-outline'></ion-icon>
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

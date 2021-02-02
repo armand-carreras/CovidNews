@@ -1,0 +1,98 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title style="text-align: center;">{{this.countryData.name}}</ion-title>
+      <ion-buttons (click)='dismiss()' slot="start">
+        <ion-button>
+          <ion-icon name='chevron-back-outline'></ion-icon>
+        </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+
+
+  <ion-content>
+
+    <div>
+    <ion-card class="compare_card">
+        <ion-card-header>
+        <ion-card-title>Confirmed Cases</ion-card-title>
+        </ion-card-header>
+        <ion-card-content >
+            <div>
+                <p>TODAY: {{countryData.country.TodayConfirmed | number }}</p>
+                <p>YESTERDAY: {{countryData.country.YesterdayConfirmed | number}}</p>
+            </div>
+            <ng-container *ngIf='countryData.country.todayVsYesterdayConfirmed>0; then subidaGC; else bajadaGC'>
+            </ng-container>
+            <ng-template #bajadaGC>
+                <ion-chip>
+                    <ion-icon name="arrow-down" color='secondary'></ion-icon>
+                    <ion-label>{{countryData.country.todayVsYesterdayConfirmed | number}}</ion-label>
+                </ion-chip>
+            </ng-template>
+            <ng-template #subidaGC>
+                <ion-chip>
+                    <ion-icon name="arrow-up" color='danger'></ion-icon>
+                    <ion-label>{{countryData.country.todayVsYesterdayConfirmed | number}}</ion-label>
+                </ion-chip>
+            </ng-template>
+        </ion-card-content>
+    </ion-card>
+    <ion-card class="compare_card">
+        <ion-card-header>
+        <ion-card-title>Dead</ion-card-title>
+        </ion-card-header>
+        <ion-card-content >
+            <div>
+                <p>TODAY: {{countryData.country.TodayDeaths | number }}</p>
+                <p>YESTERDAY: {{countryData.country.YesterdayDeaths | number}}</p>
+            </div>
+
+            <ng-container *ngIf='countryData.country.todayVsYesterdayDeaths>0; then subidaGD; else bajadaGD'>
+
+            </ng-container>
+            <ng-template #bajadaGD>
+                <ion-chip>
+                    <ion-icon name="arrow-down" color='secondary'></ion-icon>
+                    <ion-label>{{countryData.country.todayVsYesterdayDeaths | number}}</ion-label>
+                </ion-chip>
+            </ng-template>
+            <ng-template #subidaGD>
+                <ion-chip>
+                    <ion-icon name="arrow-up" color='danger'></ion-icon>
+                    <ion-label>{{countryData.country.todayVsYesterdayDeaths | number}}</ion-label>
+                </ion-chip>
+            </ng-template>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card class="compare_card">
+        <ion-card-header>
+        <ion-card-title>Recovered</ion-card-title>
+        </ion-card-header>
+        <ion-card-content >
+                        <div>
+                            <p>TODAY: {{countryData.country.TodayRecovered | number }}</p>
+                            <p>YESTERDAY: {{countryData.country.YesterdayRecovered | number}}</p>
+                        </div>
+                        <ng-container *ngIf='countryData.country.todayVsYesterdayRecovered>0; then bajadaGR; else subidaGR'>
+                        </ng-container>
+                        <ng-template #bajadaGR>
+                            <ion-chip>
+                                <ion-icon name="arrow-up" style="color: green"></ion-icon>
+                                <ion-label>{{countryData.country.todayVsYesterdayRecovered |number}}</ion-label>
+                            </ion-chip>
+                        </ng-template>
+                        <ng-template #subidaGR>
+                            <ion-chip>
+                                <ion-icon name="arrow-down" color='danger'></ion-icon>
+                                <ion-label>{{countryData.country.todayVsYesterdayRecovered | number}}</ion-label>
+                            </ion-chip>
+                        </ng-template>
+        </ion-card-content>
+    </ion-card>
+    <!-- <google-chart [data]="pieChart"></google-chart> -->
+</div>
+
+  </ion-content>

@@ -17,7 +17,7 @@
         <ion-input required formControlName="password" type="password"></ion-input>
     </ion-item>
     <p>Already have an account? <a href='/login'>Login.</a></p>
-    <ion-button block color="primary" type="submit" [disabled]="registerForm.invalid">
+    <ion-button routerLink='/questions' block color="primary" type="submit" [disabled]="registerForm.invalid">
         Login
     </ion-button>
 </form>

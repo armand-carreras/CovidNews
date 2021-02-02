@@ -4,7 +4,11 @@ import { CovidService } from '../services/covid.service';
 import { DatePipe } from '@angular/common';
 import { CountryData } from '../interface/country-data';
 import { RegionData } from '../interface/region-data';
+import { StorageService } from '../services/storage.service';
+import { delay } from 'rxjs/operators';
 import { stringify } from '@angular/compiler/src/util';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { FireAuthService } from '../services/fire-auth.service';
 // import { GoogleChartInterface } from 'ng2-google-charts';
 
 
@@ -22,17 +26,27 @@ export class DailyPage implements OnInit {
     countryData: CountryData;
     regionData: RegionData;
     options:any;
-
+    worldJson:any;
+    authState:any;
+    logged:boolean;
+    healthy:boolean;
   constructor(private route: ActivatedRoute,
             private covidService:CovidService,
-            private datePipe: DatePipe,) {
+            private authService: FireAuthService,
+            private datePipe: DatePipe,
+            private storage: StorageService) {
                 this.todayTimestamp = new Date();
-                
-                
+                if(this.authService.logged){
+                    this.logged = this.authService.logged;
+                }
+                else{
+                    this.authService.logged = false;
+                    this.logged = false;
+                }
             }
 
 
-            ngOnInit() {
+            async ngOnInit() {
                 // this.covidService.runCountry().then(resp=>console.log('runCountry UserPage',this.covidService.country)).catch(error=> console.log(error));
                 
                 
@@ -53,7 +67,7 @@ export class DailyPage implements OnInit {
                         if(pageData){
                             this.routeResolveData = pageData;
                             this.countryData=this.fillData(this.routeResolveData);
-                            // this.fillChart(this.countryData)
+                            
                         }
                         }, err=>{console.warn('http Error',err.message)});
                     }else {
@@ -67,84 +81,46 @@ export class DailyPage implements OnInit {
                 console.warn('No data coming from Route Resolver');
                 }
             }
+    
+
+            logOut(){
+                this.storage.removeItem('user');
+                this.authService.logout();
+                this.logged=false;
+                this.authService.logged=false;
+            }
+
+            async ionViewDidEnter(): Promise<void> {
+                //Called after every check of the component's view. Applies to components only.
+                //Add 'implements AfterViewChecked' to the class.
+                const response = await this.storage.getHealthy();
+                this.healthy = response['healthy'];
+                console.log('ionDidEnter: ', this.logged);
+                this.authService.isLogged$().subscribe(resp =>{
+                    if(resp && resp.uid){
+                        this.logged = true;
+                    }
+                    else{
+                        this.logged = false;
+                    }
+                })
+            }
 
 
+            async ngAfterViewInit(): Promise<void> {
+                //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+                //Add 'implements AfterViewInit' to the class.
+                    console.log('afterView',this.logged);
+                            
+                            const world = await this.covidService.getDailyWorld().toPromise();
+                            if(world){
+                                console.log('dentro if world', world);
+                                await this.storage.setWorldJson(world);
+                            }
+                            let worldJsonGet = await this.storage.getWorldJson();
+                            console.log('storageWorldJson: ', worldJsonGet);
+            }
 
-        onClick(){};
-        
-        // fillChart(countryData: CountryData){
-        //     this.pieChart={
-        //         chartType: 'PieChart',
-        //         dataTable: [
-        //             // ['Dead', this.countryData.global.TodayDeaths/this.countryData.global.TodayConfirmed*100],
-        //             ['Status', 'Cases'],
-        //             ['Dead',     countryData.global.TodayDeaths],
-        //             ['Infected',   countryData.global.TodayConfirmed - countryData.global.TodayDeaths - countryData.global.TodayRecovered],
-        //             ['Recovered',  countryData.global.TodayRecovered]
-        //         ],
-        //         // firstRowIsData: true,
-        //         options: {
-        //             title: 'Current Cases',
-        //             width:'100%',
-        //             height:'350px',
-        //             is3D: true,
-        //             backgroundColor: '#121212',
-        //             fontSize:'1.5rem',
-        //             chartArea:{
-        //                 width: '75%',
-        //                 height: '75%',
-        //                 left: 0,
-        //                 // top: 0
-        //             },
-        //             legend:{
-        //                 position: 'right',
-        //                 alignment: 'center',
-        //                 textStyle: {
-        //                     color: 'white',
-        //                     fontSize: 10
-        //                 }
-        //             }
-        //         },
-                
-        //     };
-        //     this.countryPieChart={
-        //         chartType: 'PieChart',
-        //         dataTable: [
-        //             // ['Dead', this.countryData.global.TodayDeaths/this.countryData.global.TodayConfirmed*100],
-        //             ['Status', 'Cases'],
-        //             ['Dead',     countryData.country.TodayDeaths],
-        //             ['Infected',   countryData.country.TodayConfirmed - countryData.country.TodayDeaths - countryData.country.TodayRecovered],
-        //             ['Hospitalized', countryData.country.TodayHospitalizedPatients],
-        //             ['Intensive Care', countryData.country.TodayIntensiveCare],
-        //             ['Recovered',  countryData.country.TodayRecovered]
-        //         ],
-        //         // firstRowIsData: true,
-        //         options: {
-        //             'title': 'Current Cases',
-        //             pieStartAngle: '200',
-        //             width:'100%',
-        //             height:'auto',
-        //             is3D: true,
-        //             backgroundColor: '#121212',
-        //             fontSize:'1.5rem',
-        //             chartArea:{
-        //                 width: '75%',
-        //                 height: '75%',
-        //                 left: 0,
-        //                 // top: 0
-        //             },
-        //             legend:{
-        //                 position: 'right',
-        //                 alignment: 'center',
-        //                 textStyle: {
-        //                     color: 'white',
-        //                     fontSize: 10
-        //                 }
-        //             }
-        //         },
-                
-        //     };
-        // }
 
         fillData(JSONData): CountryData{
             let countryData: CountryData = {
@@ -154,13 +130,26 @@ export class DailyPage implements OnInit {
             };
             let date = new Date();
             let formatedDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+            let finalDate:string;
             if(parseInt(this.datePipe.transform(date,"HH"))<6){
                 let formated = this.datePipe.transform(date, 'yyyy-MM-dd');
                 let arr = formated.split('-');
-                arr[2] = stringify(parseInt(arr[2])-1);
+                let diaResta = parseInt(arr[2])-1;
+                if(diaResta/10<=1){
+                    let dayStr = diaResta.toString();
+                    dayStr = '0'+dayStr;
+                    arr[2] = dayStr;
+                }
+                else{
+                    arr[2]=diaResta.toString();
+                }
                 formatedDate = arr.join('-');
             }
+            console.log('fillData: J',JSONData);
+            
+
             if(this.covidService.country_code == 'es'){
+                console.log(formatedDate)
                 countryData.name = JSONData.dates[formatedDate].countries[this.covidService.country].name_es;
             }
             else if(this.covidService.country_code == 'it'){

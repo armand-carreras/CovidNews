@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "238078188169",
+    "project_id": "covidnews-app",
+    "storage_bucket": "covidnews-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238078188169:android:73fcb4d79055a1e235c458",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238078188169-k93r2gqq32g5tcudcl9ptoihnee88ful.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "4c9542fe38785d866d7ac1ff012a1626ce346ec9"
+          }
+        },
+        {
+          "client_id": "238078188169-vqqvi3vhbevj9t94mi79helo0sscf088.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmWSWF3yZBDrvihhTC0Wrfw1aOxXJfY4A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238078188169-vqqvi3vhbevj9t94mi79helo0sscf088.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

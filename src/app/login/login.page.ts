@@ -1,8 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FireAuthService } from '../services/fire-auth.service';
-import { StoreService } from '../services/store.service';
+import { StorageService } from '../services/storage.service';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,7 @@ export class LoginPage implements OnInit {
   constructor(private formBuilder: FormBuilder,
                 private router: Router,
                 private authFireService: FireAuthService,
-                private storeService: StoreService) { }
+                private storeService: StorageService) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -33,15 +35,18 @@ export class LoginPage implements OnInit {
     });
   }
  
-    async signIn(user){
-        const result = await this.authFireService.login(user);
-        const token  = await result.user.getIdToken();
+    async signIn(){
+        const result = await this.authFireService.login(this.loginForm.get('email').value,this.loginForm.get('password').value);
         console.log(result);
-        // this.storeService.
-        // localStorage.setItem('accessToken', token);
-        this.router.onSameUrlNavigation = 'reload';
+        let user= {
+          email: this.loginForm.get('email').value,
+          uid: result.user.uid
+        }
+        await this.storeService.saveUserInfo(user);
+        console.log('login is logged? :', await this.authFireService.isLogged$().toPromise())
+        // this.router.onSameUrlNavigation = 'reload';
         //this.router.navigate(['/']);
-        this.router.navigate([`/questions`]);
+        
   
     }
      onIsError(): void {
