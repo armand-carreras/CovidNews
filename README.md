@@ -19,7 +19,7 @@
       - (https://serpwow.com/docs/search-api/searches/parameters)
         - News API fetching from: Google, Bing, Yahoo!...
         
-## Trello & MockUp:
+## Enlaces de interés:
   1. Trello:
     - (https://trello.com/invite/b/IFbNwFJW/46d88f41d523d0b014d039a4c5c56db6/covidapp)
   2. MockUp:
