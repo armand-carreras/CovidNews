@@ -23,8 +23,12 @@
   1. Trello:
     - (https://trello.com/invite/b/IFbNwFJW/46d88f41d523d0b014d039a4c5c56db6/covidapp)
   2. MockUp:
-    - (https://app.moqups.com/aE0XeMmoVU/view/page/aa6a51a80)
+    - (https://app.moqups.com/aE0XeMmoVU/view/page/aa6a51a80?ui=0)
   3.  Github:
     - (https://github.com/armand-carreras/CovidNews/tree/master)
   4. Apk:
     - (https://drive.google.com/file/d/1_WazAtktW2qX8sYdJL4s1tKNmfwpHLsk/view?usp=sharing)
+  5. Presentacion:
+    - (https://slides.com/armandcarreraslluch/deck-ce54aa/fullscreen)
+  6. Firebase Hosting:
+    - (https://covidnews-app.web.app)
