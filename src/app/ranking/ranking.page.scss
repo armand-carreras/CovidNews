@@ -1,0 +1,5 @@
+ion-list{
+    ion-item:nth-child(odd){
+        --background: rgb(49, 49, 49);
+    }
+}

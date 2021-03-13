@@ -29,13 +29,11 @@ export class RankingPage implements OnInit {
               }
 
 
-
   async ngOnInit() {
     try{
       this.jsonData = await this.storage.getWorldJson();
       this.countryList = await this.covidService.getCountriesList$().toPromise();
       this.countryList = this.countryList.countries;
-      
     }
     catch(error){
       console.log(error);
@@ -43,13 +41,16 @@ export class RankingPage implements OnInit {
     this.full_countryList = this.countryList;
     console.log('jsonData',this.jsonData, this.countryList);
     
-      this.dateStr = this.claculateDate();
+    this.dateStr = this.claculateDate();
+    this.countryList = this.sortBy();
    
     console.log(this.dateStr);
     
   }
 
-
+  sortBy(){
+    return this.countryList.sort((n1,n2)=> this.jsonData.dates[this.dateStr].countries[n1.name].today_confirmed < this.jsonData.dates[this.dateStr].countries[n2.name].today_confirmed)
+  }
 
   onSearch(event){
     console.log(event);
@@ -144,7 +145,7 @@ claculateDate(){
       let formated = this.datePipe.transform(date, 'yyyy-MM-dd');
       let arr = formated.split('-');
       let diaResta = parseInt(arr[2])-1;
-      if(diaResta/10<=1){
+      if(diaResta/10<1){
           let dayStr = diaResta.toString();
           dayStr = '0'+dayStr;
           arr[2] = dayStr;
@@ -171,5 +172,9 @@ async presentModal(){
 
   return await modal.present();
 
+}
+
+substractor(number1, number2){
+  return number1 - number2
 }
 }

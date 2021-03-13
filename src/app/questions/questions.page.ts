@@ -120,14 +120,14 @@ export class QuestionsPage implements OnInit {
 
 
 
-  async handleQuestions():Promise<any[]>{
+  async handleQuestions(respuestas: any[]):Promise<any[]>{
     let lessCount = 0;
     let mediumCount = 0;
     let hardCount = 0;
     let List = [];
 
-    for(let i = 0; i<this.respuestas.length; i++){
-      let resp = this.respuestas[i];
+    for(let i = 0; i<respuestas.length; i++){
+      let resp = respuestas[i];
       if(resp.hasSymptom){
         List.push(resp);
       }
@@ -141,13 +141,14 @@ export class QuestionsPage implements OnInit {
         hardCount++;
       }
     }
-    if(lessCount == 3 || mediumCount == 2 || hardCount == 1){
+    if(lessCount >= 3 || mediumCount >= 2 || hardCount >= 1){
       try{
         await this.storage.saveQuestionsSick(List);
       }
       catch(error){
         console.error(error)
       }
+
       return List;
     }
     
@@ -188,11 +189,12 @@ export class QuestionsPage implements OnInit {
         }
       );
       try{ 
-        await this.handleQuestions();
+        await this.handleQuestions(this.respuestas);
       }
       catch(error){
         console.error(error);
       }
+      this.index = 0;
       this.router.navigate(['daily']);
     }
   }
@@ -221,11 +223,12 @@ export class QuestionsPage implements OnInit {
         }
       );
       try{ 
-        await this.handleQuestions()
+        await this.handleQuestions(this.respuestas);
       }
       catch(error){
         console.error(error);
       }
+      this.index = 0;
       this.router.navigate(['daily']);
     }
   }

@@ -186,9 +186,12 @@
             <ion-card-title>Recovered</ion-card-title>
             </ion-card-header>
             <ion-card-content >
-                <div>
+                <div *ngIf="countryData.country.TodayRecovered != 0">
                     <p>TODAY: {{countryData.country.TodayRecovered | number }}</p>
                     <p>YESTERDAY: {{countryData.country.YesterdayRecovered | number}}</p>
+                </div>
+                <div *ngIf="countryData.country.TodayRecovered == 0">
+                    <p>No actual data!</p>
                 </div>
                 <ng-container *ngIf='countryData.country.todayVsYesterdayRecovered>0; then bajadaCR; else subidaCR'>
                 </ng-container>
@@ -212,9 +215,12 @@
             <ion-card-title>Hospitalized</ion-card-title>
             </ion-card-header>
             <ion-card-content >
-                <div>
+                <div *ngIf="countryData.country.TodayHospitalizedPatients!=0">
                     <p>TODAY: {{countryData.country.TodayHospitalizedPatients | number }}</p>
                     <p>YESTERDAY: {{countryData.country.YesterdayHospitalizedPatients | number}}</p>
+                </div>
+                <div *ngIf="countryData.country.TodayRecovered == 0">
+                    <p>No actual data!</p>
                 </div>
                 <ng-container *ngIf='countryData.country.todayVsYesterdayHospitalizedPatients>0; then bajadaCH; else subidaCH'>
                 </ng-container>
@@ -238,9 +244,12 @@
             <ion-card-title>Intensive Care</ion-card-title>
             </ion-card-header>
             <ion-card-content >
-                <div>
+                <div *ngIf="countryData.country.TodayIntensiveCare!=0">
                     <p>TODAY: {{countryData.country.TodayIntensiveCare | number }}</p>
                     <p>YESTERDAY: {{countryData.country.YesterdayIntensiveCare | number}}</p>
+                </div>
+                <div *ngIf="countryData.country.TodayRecovered == 0">
+                    <p>No actual data!</p>
                 </div>
                 <ng-container *ngIf='countryData.country.todayVsYesterdayIntensiveCare>0; then bajadaCI; else subidaCI'>
                 </ng-container>
